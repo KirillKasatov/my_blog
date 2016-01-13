@@ -1,0 +1,5 @@
+Django==1.8
+Pillow
+django-mptt
+psycopg2
+sorl-thumbnail

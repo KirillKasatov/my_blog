@@ -1,0 +1,63 @@
+{% extends 'blog/base.html' %}
+{% load custom %}
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+
+    <h1>Home</h1>
+
+    {% for article in paginator %}
+        <h4><a href="{% url 'article' article.id %}">{{ article.title }}</a></h4>
+
+        <div class="slide">
+            {{ article.text }}
+        </div>
+    {% endfor %}
+
+
+    {#        <div class="short-text">#}
+    {#        {{ article.text|slice:':400' }}#}
+    {#        </div>#}
+    {#        {% if article.text|length > 400 %}#}
+    {#            <span class="full-text" style="display: none; float: left;">{{ article.text|slice:'400:' }}</span>#}
+    {#            <a href="#" class="show-more">...</a>#}
+    {#        {% endif %}#}
+
+
+{{ paginator.render }}
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(".slide").collapser({
+            target: 'next',
+            mode: 'words',
+            speed: 'slow',
+            truncate: 50,
+            ellipsis: '...',
+            effect: 'fade',
+            controlBtn: '',
+            showText: 'more',
+            hideText: 'hide',
+            showClass: 'show-class',
+            hideClass: 'hide-class',
+            atStart: 'hide',
+            lockHide: false,
+            dynamic: false,
+            changeText: false,
+            beforeShow: null,
+            afterShow: null,
+            beforeHide: null,
+            afterHide: null
+        });
+        {#        $(".show-more").click(function () {#}
+        {#            var $this = $(this);#}
+        {#            var $fulltext = $this.prev(".full-text");#}
+        {#            $this.text($fulltext.is(":visible")?'...':'hide');#}
+        {#            $fulltext.slideToggle("slow");#}
+        {#        });#}
+    </script>
+{% endblock %}

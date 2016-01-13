@@ -1,0 +1,53 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+{% load mptt_tags %}
+{% load thumbnail %}
+
+{% block title %}
+    {{ article.title }}
+{% endblock %}
+
+{% block content %}
+
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.text }}</p>
+
+    {% thumbnail article.image "100x100" crop="center" as im%}
+        <img src="{{ im.url }}" alt="Нету">
+    {% endthumbnail %}
+
+    <a href="#" class="js-add-comment">Оставить комментарий</a>
+
+    <p>Комментарии</p>
+
+
+    <div class="form-template" style="display: none">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Добавить комментарий">
+        </form>
+    </div>
+
+
+    {% recursetree comments %}
+        <div class="comment-box" style="padding-left: {% if node.level %}50px;{% endif %}">
+            <p>{{ node.text }}</p>
+
+            <p>{{ node.time }}</p>
+
+            <p>{{ node.user|default_if_none:'Анонимус' }}</p>
+            <a href="#" class="js-add-comment" comment_id="{{ node.id }}">Оставить комментарий</a>
+            {% if not node.is_leaf_node %}
+                {{ children }}
+            {% endif %}
+        </div>
+    {% endrecursetree %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'blog/comments.js' %}"></script>
+{% endblock %}
+
+

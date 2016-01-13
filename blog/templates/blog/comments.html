@@ -1,0 +1,9 @@
+<div class="comment-box" style="padding-left: {% widthratio level 1 50 %}px">
+{% for c in comments %}
+    <p>{{ c.text }}</p>
+    <p>{{ c.time }}</p>
+    <p>{{ c.user|default_if_none:'Анонимус' }}</p>
+    <a href="#" class="js-add-comment" comment_id="{{ c.id }}">Оставить комментарий</a>
+    {% include 'blog/comments.html' with comments=c.child_set.all level=1 %}
+{% endfor %}
+</div>

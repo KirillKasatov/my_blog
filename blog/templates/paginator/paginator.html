@@ -1,0 +1,22 @@
+<ul class="pagination">
+    {% for p in paginator.page_range %}
+        {% if forloop.first and paginator.current_page != p %}
+            <li><a href="?page={{ paginator.current_page|add:-1 }}">&laquo;</a></li>
+        {% endif %}
+        <li {% if p == paginator.current_page or p == '...' %}class="active"{% endif %}><a
+                href="?page={{ p }}">{{ p }}</a></li>
+        {% if forloop.last and paginator.current_page != p %}
+            <li><a href="?page={{ paginator.current_page|add:1 }}">&raquo;</a></li>
+        {% endif %}
+    {% endfor %}
+</ul>
+    {#                {% if paginator.current_page >= 4 %}#}
+    {#                    <li><a href="#">...</a></li>#}
+    {#                {% endif %}#}
+    {#            <li {% if p <= 2 %}{% endif %}><a href="?page={{ p }}">{{ p }}</a></li>#}
+    {#            {% if p >= paginator.current_page|add:-2 and p <= paginator.current_page|add:2 %}#}
+    {#            {% endif %}#}
+    {#                {% if paginator.current_page <= 4 %}#}
+    {#                    <li><a href="#">...</a></li>#}
+    {#                {% endif %}#}
+{#                <li {% if p >= 2 %}{% endif %}><a href="?page={{ p }}">{{ p }}</a></li>#}
